@@ -27,7 +27,7 @@ let package = Package(
     targets: [
                 
         .target(
-            name: "AppSwiftSQLite",
+            name: "SwiftSQLite",
             dependencies: []),
         
         .testTarget(
