@@ -4,13 +4,13 @@
 import PackageDescription
 
 let package = Package(
-    name: "SwiftSQLite",
+    name: "AppSwiftSQLite",
     products: [
         /**
          SwiftSQLite library, using the built in SQLite, no SQLCipher support
          */
         .library(
-            name: "SwiftSQLite",
+            name: "AppSwiftSQLite",
             targets: ["SwiftSQLite"]),
         /**
          SwiftSQLCipher library, using the SQLCipher library, see additional license for details
@@ -27,7 +27,7 @@ let package = Package(
     targets: [
                 
         .target(
-            name: "SwiftSQLite",
+            name: "AppSwiftSQLite",
             dependencies: []),
         
         .testTarget(
