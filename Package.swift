@@ -4,64 +4,54 @@
 import PackageDescription
 
 let package = Package(
-    name: "AppSwiftSQLite",
+    name: "AppSwiftSQLite", // <<< 1. Nome del Package
     products: [
-        /**
-         SwiftSQLite library, using the built in SQLite, no SQLCipher support
-         */
         .library(
-            name: "AppSwiftSQLite",
-            targets: ["SwiftSQLite"]),
-        /**
-         SwiftSQLCipher library, using the SQLCipher library, see additional license for details
-         */
-        .library(name: "SwiftSQLCipher",
+            name: "AppSwiftSQLite", // <<< 2. Nome del Prodotto/Modulo (quello che importi)
+            targets: ["AppSwiftSQLite"] // <<< 3. DEVE PUNTARE AL NOME DEL TARGET INTERNO
+        ),
+        .library(name: "SwiftSQLCipher", // Rimane SwiftSQLCipher se è un prodotto separato
             targets: ["SwiftSQLCipher"]),
-        
         .executable(name: "SwiftSQLCipherTest",
                     targets: ["SwiftSQLCipherTest"]),
-        
     ],
     dependencies: [
     ],
     targets: [
-                
         .target(
-            name: "SwiftSQLite",
+            name: "AppSwiftSQLite", // <<< 4. NOME DEL TARGET EFFETTIVO con il codice sorgente
             dependencies: []),
-        
+
+        // Devi aggiornare le dipendenze dei test target per puntare al nuovo nome del modulo
         .testTarget(
             name: "SwiftSQLiteTests",
-            dependencies: ["SwiftSQLite"]),
-        
+            dependencies: ["AppSwiftSQLite"]), // <<< Aggiornato qui
+            
         .target(
             name: "SwiftSQLCipher",
-            dependencies: [],
+            dependencies: [], // VEDI SOTTO: questo deve dipendere da AppSwiftSQLite se lo usa
             cSettings: SwiftSQLCipherCFlags,
             swiftSettings: [
                 .define("SWIFT_SQLITE_CIPHER")
             ],
             linkerSettings: []
         ),
-        
+            
         .testTarget(
             name: "SwiftSQLCipherTests",
-            dependencies: ["SwiftSQLCipher"],
+            dependencies: ["SwiftSQLCipher"], // Questo dipende da SwiftSQLCipher, OK
             swiftSettings: [
                 .define("SWIFT_SQLITE_CIPHER")
             ],
             linkerSettings: []
         ),
-        
+            
         .executableTarget(
             name: "SwiftSQLCipherTest",
             dependencies: [
                 "SwiftSQLCipher"
             ]
         )
-        
-        
-        
     ]
 )
 
