@@ -3,6 +3,7 @@
 
 import PackageDescription
 
+
 let package = Package(
     name: "AppSwiftSQLite", // <<< 1. Nome del Package
     products: [
