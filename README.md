@@ -1,7 +1,7 @@
 ## 🛠️ differences from original 
 
 I have changed the package name to AppSwiftSQLite due to a conflict with /System/Library/PrivateFrameworks/SwiftSQLite.framework/SwiftSQLite
-Now to import in your projects use :
+#To import into your projects use :
 
 import AppSwiftSQLite
 
