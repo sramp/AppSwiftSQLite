@@ -1,3 +1,10 @@
+## 🛠️ differences from original 
+
+I have changed the package name to AppSwiftSQLite due to a conflict with /System/Library/PrivateFrameworks/SwiftSQLite.framework/SwiftSQLite
+Now to import in your projects use :
+
+import AppSwiftSQLite
+
 # SwiftSQLite
 
 ![Swift](https://github.com/moshegottlieb/SwiftSQLite/workflows/Swift/badge.svg)
