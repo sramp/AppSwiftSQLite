@@ -21,7 +21,7 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "SwiftSQLiteTests",
-            dependencies: ["SwiftSQLite"]),
+            dependencies: ["AppSwiftSQLite"]),
     ]
 )
 
