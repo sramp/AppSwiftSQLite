@@ -90,17 +90,30 @@ public extension Database {
         if directOnly {
             flags |= SQLITE_DIRECTONLY
         }
+        // C function pointers must be formed from a direct func reference, not through a ternary expression
+        typealias XFunc = @convention(c) (OpaquePointer?, Int32, UnsafeMutablePointer<OpaquePointer?>?) -> Void
+        typealias XFinal = @convention(c) (OpaquePointer?) -> Void
+        var xFunc: XFunc? = nil
+        var xStep: XFunc? = nil
+        var xFinal: XFinal? = nil
+        if function != nil {
+            xFunc = functionCallback
+        }
+        // Check if **step** is nil, because we have to provide a callback for final if so.
+        // If the user does not supply a callback, we'll just set the pending result, which is usually what is needed anyway
+        if step != nil {
+            xStep = stepCallback
+            xFinal = finalCallback
+        }
         try check(sqlite3_create_function_v2(
             handle,
             name,
             nArgs,
             flags,
             context_ptr,
-            function == nil ? nil : functionCallback,
-            step == nil ? nil : stepCallback,
-            // Check if **step** is nil, because we have to provide a callback for final if so.
-            // If the user does not supply a callback, we'll just set the pending result, which is usually what is needed anyway
-            step == nil ? nil : finalCallback,
+            xFunc,
+            xStep,
+            xFinal,
             { // Lastly, the destructor for our context object
                 ptr in
                 Unmanaged<Context>.fromOpaque(ptr!).release()
